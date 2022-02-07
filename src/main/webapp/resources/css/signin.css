@@ -1,0 +1,103 @@
+body {
+  margin-bottom: 0;
+}
+
+#member_id, #member_pw {
+  outline: none;
+  border: 1px solid #e8e8e8;
+  padding: 8px 12px;
+  height: 45px;
+  margin-bottom: 10px;
+}
+
+.body-wrapper {
+  height: calc(100vh - 48px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 525px;
+  background-color: #fff;
+}
+
+.selection-container {
+  margin-top: -42px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 9px;
+  padding: 32px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.09);
+}
+
+.selection-container > div {
+  width: 360px;
+}
+
+.selection-container h3 {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: var(--dark-gray-color);
+  margin-bottom: 12px;
+}
+
+.selection-container h3::after {
+  content: '';
+  display: block;
+  height: 1px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  margin-top: 3px;
+}
+
+.selection {
+  display: flex;
+  flex-direction: column;
+}
+
+.selection a {
+  display: flex;
+  width: 100%;
+  color: rgba(0, 0, 0, 0.75);
+  text-align: center;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.09  );
+  border-radius: 4px;
+  margin-bottom: 16px;
+  height: 48px;
+  line-height: 48px;
+  text-align: left;
+  padding-left: 135px;
+  align-items: center;
+  font-family: '留묒� 怨좊뵓', 'Roboto', 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+}
+
+.selection a span {
+  font-size: 24px;
+  display: inline-block;
+  padding-right: 10px;
+  opacity: 0.7;
+}
+
+.selection a:hover {
+  color: var(--main-color);
+  border-color: rgba(0, 123, 255, 0.9);
+  background-color: rgba(0, 123, 255, 0.03);
+}
+
+/* 移댁뭅�삤 svg */
+.selection a span.kakao {
+  width: 24px;
+  height: 100%;
+  line-height: 52px;
+  box-sizing: content-box;
+  align-items: center;
+  fill: rgba(0, 0, 0, 0.75);
+}
+.selection a:hover span.kakao {
+  fill: var(--main-color);
+}
+
+header.topbar .container {
+  width: 520px;
+}

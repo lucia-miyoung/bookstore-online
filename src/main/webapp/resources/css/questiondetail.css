@@ -1,0 +1,198 @@
+button {
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+ul {
+    padding:0;
+    margin:0;
+    list-style: none;
+}
+a {
+    text-decoration: none;
+}
+p {
+    padding:0; 
+    margin:0;
+}
+.main-container {
+    max-width: 800px;
+    margin-top:100px;
+    display: flex;
+    flex-direction: column;
+    margin: 5% auto;
+}
+.main-container .container {
+    width: 80%;
+    margin:0 auto;
+    padding:20px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.container .list_btn {
+	text-align:center;
+	margin-top: 35px;
+}
+.container .list_btn > a {
+	outline: none;
+    padding: 11px 21px;
+    font-size: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.2 );
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0.75);
+    border-radius: 4px;
+    transition: all 200ms ease-in-out;
+    cursor: pointer;
+    display: inline-block;
+}
+.container .list_btn > a:hover {
+	color: #007bff;
+    border-color: rgba(0, 123, 255, 0.9);
+    background-color: rgba(0, 123, 255, 0.03);
+}
+.question_container {
+    display: flex;
+    flex-direction: column;
+}
+.question_container .question_date {
+    font-size: 12px;
+    margin:8px;
+}
+.question_container .question_info {
+    display: flex;
+    font-size: 12px;
+    margin:8px;
+}
+.question_container .question_info ul.upper {
+    font-weight: bold;
+    width: 80px;
+}
+.question_container .question_info ul li {
+    padding: 4px 0;
+}
+input.question_title {
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    box-shadow: 0 2px 12px rgb(0 0 0 / 9%);
+    padding: 10px 15px;
+    cursor: default;
+    flex:1;
+    font-size: 13px;
+}
+div.question_content {
+    width:100%;
+    outline:none;
+    resize:none;
+    padding:15px;
+    margin-top:10px;
+    height: 200px;
+    font-size:13px;
+    box-sizing: border-box;
+    overflow:hidden;
+    background-color: #E9EDF3;
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    box-shadow: 0 2px 12px rgb(0 0 0 / 9%);
+    cursor: default;
+}
+.question_content .question_image {
+    max-width: 400px;
+    margin:5% auto;
+}
+.question_content .question_image img {
+    width: 100%;
+}
+.answer_wrap {
+    padding:10px 4px;
+    margin-top:10px;
+}
+.answer_comment {
+    border-top:1px solid #333;
+    margin-top:15px;
+}
+.answer_comment p {
+    position:relative;
+    margin: 4px 0;
+}
+.answer_comment p i {
+    opacity: 0.7;
+    cursor: pointer;
+   	margin-left: 21px;
+    margin-top: 4px;
+}
+.answer_comment p .new_icon {
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+    font-size: 10px;
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    border-radius: 50%;
+    background-color: red;
+    box-shadow: 0 2px 12px rgb(0 0 0 / 9%);
+    padding-right: 1px;
+    padding-bottom: 1px;
+    margin-right: 10px;
+    display: inline-block;
+    position: absolute;
+    margin-top: 5px;
+}
+.answer_comment p .new_icon.invisible {
+    display: none;
+}
+.answer_comment p span.name {
+    font-weight: bold;
+}
+.answer_comment p > span {
+    font-size: 12px;
+    margin-right:5px;
+}
+.answer_comment > .comment {
+    font-size: 13px;
+    border-top:1px dotted #ccc;
+    padding: 5px 0;
+}
+.answer_container {
+    margin-top: 25px;
+}
+.answer_container.invisible {
+    display: none;
+}
+.answer_container .answer_content {
+    width:100%;
+    outline:none;
+    resize:none;
+    border:none;
+    height: 150px;
+    font-size:13px;
+    padding:10px;
+    box-sizing: border-box;
+    overflow:hidden;
+    border: 1px solid rgba(0, 0, 0, 0.2 );
+    background-color: #fff;
+}
+.answer_container button.answer_add_btn {
+    position: absolute;
+    right: 97px;
+    bottom: 62px;
+    outline: none;
+    padding: 6px 15px;
+    font-size: 14px;
+    margin-top: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.2 );
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0.75);
+    border-radius: 4px;
+    transition: all 200ms ease-in-out;
+    cursor: pointer;
+}
+.answer_container button.answer_add_btn i{
+    opacity: 0.7;
+    margin-right:4px;
+    font-size: 16px;
+}
+.answer_container button.answer_add_btn:hover {
+    color: #007bff;
+    border-color: rgba(0, 123, 255, 0.9);
+    background-color: rgba(0, 123, 255, 0.03);
+}

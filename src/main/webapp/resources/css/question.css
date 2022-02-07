@@ -1,0 +1,227 @@
+input[type="text"] {
+	outline:none;
+}
+button {
+	cursor:pointer;
+	background-color:transparent;
+}
+div.main-container {
+	width: 800px;
+	margin: 0 auto;
+}
+.main-container .container {
+	width: 80%;
+    margin: 0 auto;
+}
+.searchContainer .search_wrap {
+	text-align: right;
+    margin: 40px 0 12px 0;
+}
+.searchContainer .search_wrap #search_name {
+	padding: 4px 8px;
+    font-size: 12px;
+    width: 150px;
+}
+.searchContainer .search_wrap #search_btn {
+	padding: 5px 11px;
+    font-size: 13px;
+    background-color: #0099ff;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    box-shadow: 3px 3px 3px rgb(0 0 0 / 8%), 0 2px 2px rgb(0 0 0 / 16%);
+}
+.questionTable {
+	height: 440px;
+}
+.questionTable table {
+    background-color: white;
+    width: 100%;
+    font-size: 13px;
+    border-top: 1px solid #333;
+    border-collapse: collapse;
+}
+.questionTable table thead {
+	background-color: #e8e8e8;
+}
+.questionTable table th {
+    padding: 8px;
+    border-bottom:1px solid #999;
+}
+.questionTable table tbody {
+	    background-color: #fff;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+/* 문의사항 제목 qst_preview */
+.questionTable table tbody tr:nth-child(1) td{
+	padding:10px;
+}
+/* 문의사항 상세히 qst_detail */
+.questionTable table tbody tr:nth-child(2).invisible{
+	display:none;
+}
+.questionTable table td {
+    text-align:center;   
+}
+.questionTable table td span.qstType {
+	display: block; /* 중요!! */
+	overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 80px;
+}
+.questionTable .no_question{
+	display: block;
+    margin: 25% auto;
+    font-size: 14px;
+    font-weight: bold;
+    color: gray;
+}
+.questionTable a {
+    color:#333;
+    font-weight:bold;
+}
+.questionTable a#qst_title {
+	display: block; /* 중요!! */
+	overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 170px;
+}
+.questionTable button#deleteBtn {
+    border:none;
+    background-color:transparent;
+    cursor: pointer;
+    outline:none;
+    transition:all 200ms ease-in-out;
+}
+.questionTable button#deleteBtn:hover i {
+    transform: scale(1.02);
+    color:red;
+}
+.detailQuestion i{
+    font-size:15px;
+}
+.fa-quora {
+    color:rgb(201, 52, 52);
+}
+
+.fa-font {
+    color:rgb(30, 114, 170);
+}
+
+.detailQuestion {
+    display: flex;
+    flex-direction: column;
+}
+
+.detailQuestion strong{
+  border-right: 1px solid #ccc;
+  width:70px;
+}
+.detailQuestion .question-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+.detailQuestion .question-detail p {
+    margin: 10px 20px;
+    flex:1;
+}
+.detailQuestion .question-detail .divider {
+	width: 90%;
+    height: 1px;
+    background-color: #e8e8e8;
+    margin: 20px 0;
+}
+.detailQuestion .question-detail .question-img {
+	width: 250px;
+    margin: 10px 0;
+}
+.detailQuestion .question-detail .question-img > img {
+	max-width: 100%;
+}
+.answer p {
+    color: #333;
+    margin:0 auto;
+    padding: 30px 0;
+}
+.answer{
+   	display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: #F3F4F6;
+}
+.question{
+    border-top:1px solid #e8e8e8;
+   	display: flex;
+    align-items: center;
+    padding: 15px;
+}
+div.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	margin-top: 25px;
+}
+div.pagination div.page {
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+}
+div.pagination div.page #pageCnt {
+	display: flex;
+}
+div.pagination div.page a {
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: 0 10px;
+    height: 31px;
+    border-right:1px solid #ccc;
+}
+div.pagination div.page a:first-child {
+    border-left: 1px solid #ccc;
+}
+div.pagination div.page a.active {
+	background-color: #017bff;
+    font-weight: bold;
+    color: #fff;
+    border: none;
+}
+.btn.page {
+	cursor: pointer;
+    outline: none;
+    background: none;
+    border: 0;
+    font-size: 0.9em;
+    font-family: 'Nanum Gothic', 'Roboto', 'Noto Sans KR', sans-serif;
+    width: 27px;
+    height: 31px;
+    color: #017bff;
+}
+
+.btn.page:first-child {	
+	margin-left: 0; 
+}
+.btn.page:last-child {	
+	margin-left: 0; 
+}
+
+.btn.page:hover:not([disabled]) {
+	background-color:#017bff;
+	color: #fff;
+}
+.btn.page:disabled {
+	cursor: text;
+	color: rgba(0, 0, 0, 0.1);
+}
+
