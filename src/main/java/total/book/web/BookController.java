@@ -19,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import common.CommonController;
 import total.book.service.BookService;
 import total.login.service.LoginService;
-
+import total.member.service.MemberService;
 
 @Controller
 @RequestMapping("/book")
@@ -34,14 +34,16 @@ public class BookController extends CommonController{
 	@Resource(name="BookService")
 	private BookService service;
 	
-
+	@Resource(name="MemberService")
+	private MemberService memService;
+	
 	
 	@RequestMapping(value="/main")
 	public String booklist(HttpServletRequest req,HttpServletResponse res, @RequestParam HashMap paramMap,ModelMap model) throws Exception{
 		
-		
+		model.addAttribute("paramMap", memService.getMemInfo(paramMap));
 		model.addAttribute("bookList", service.bookList(paramMap));
-		
+		model.addAttribute("reviewList", memService.reviewListall(paramMap));
 		model.addAttribute("saleList", service.salebookList(paramMap));
 		
 		return "/main/main";
@@ -52,9 +54,9 @@ public class BookController extends CommonController{
 		System.out.println("orderbook {} : " + paramMap);
 		
 		model.addAttribute("paramMap", paramMap);
-
+		model.addAttribute("memInfo", memService.getMemInfo(paramMap));
 		model.addAttribute("bookInfo", service.bookDetail(paramMap));
-		
+		System.out.println("mem: " + memService.getMemInfo(paramMap));
 		System.out.println("book: " + service.bookDetail(paramMap));
 		return "/main/paper";
 	}
@@ -73,6 +75,24 @@ public class BookController extends CommonController{
 		model.addAttribute("paramMap", paramMap);
 
 		return "/main/search";
+	}
+	@RequestMapping(value="/best") 
+	public String best(HttpServletRequest req,HttpServletResponse res, @RequestParam HashMap paramMap,ModelMap model) throws Exception{
+		System.out.println("best {} : " + paramMap);
+	
+		model.addAttribute("bookList", service.bookList(paramMap));
+		model.addAttribute("paramMap", paramMap);
+
+		return "/main/best";
+	}
+	@RequestMapping(value="/books") 
+	public String books(HttpServletRequest req,HttpServletResponse res, @RequestParam HashMap paramMap,ModelMap model) throws Exception{
+		System.out.println("book {} : " + paramMap);
+	
+		model.addAttribute("bookList", service.bookList(paramMap));
+		model.addAttribute("paramMap", paramMap);
+
+		return "/main/books";
 	}
 	
 	@ResponseBody
