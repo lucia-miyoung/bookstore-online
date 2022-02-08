@@ -48,8 +48,7 @@ public class MemberController extends CommonController {
 	private BasicService basicService;
 
 	@RequestMapping(value = "/mypage")
-	public String goMypage(HttpServletRequest req, HttpServletResponse res, @RequestParam HashMap paramMap,
-			ModelMap model) throws Exception {
+	public String goMypage(HttpServletRequest req, HttpServletResponse res, @RequestParam HashMap paramMap, ModelMap model) throws Exception {
 		System.out.println("mypage {}:  " + paramMap);
 		int reviewCnt = service.reviewCount(paramMap);
 		paramMap.put("member_id", service.getMemInfo(paramMap).get("member_id"));
@@ -63,7 +62,6 @@ public class MemberController extends CommonController {
 		model.addAttribute("orderCnt", service.orderListCnt(paramMap));
 		model.addAttribute("showdata", service.showalldata(paramMap));
 		model.addAttribute("userdata", service.getMemInfo(paramMap));
-		System.out.println(service.orderList(paramMap));
 
 		return "/login/mypage";
 	}
@@ -280,6 +278,10 @@ public class MemberController extends CommonController {
 		System.out.println("detail here22:: " + paramMap);
 		int orderchk = service.orderdupchk(paramMap);
 		int status = service.dupCheck(paramMap);
+		List<String> chkArr = new ArrayList<String>();
+		chkArr.add((String) paramMap.get("book_id"));
+		paramMap.put("zzimdupChk", chkArr);
+		int zzimchk = service.zzimChk(paramMap);
 		model.addAttribute("paramMap", paramMap);
 		model.addAttribute("status", status);
 		model.addAttribute("heartCnt", service.heartCount(paramMap));
@@ -287,12 +289,13 @@ public class MemberController extends CommonController {
 		model.addAttribute("bookList", bookService.bookList(paramMap));
 		model.addAttribute("likedlist", bookService.booklikeUsers(paramMap));
 		model.addAttribute("bookInfo", bookService.bookDetail(paramMap));
-		model.addAttribute("zzimCnt", service.zzimChk(paramMap));
+		model.addAttribute("zzimCnt", zzimchk);
 		model.addAttribute("emotag", service.emotagList(paramMap));
 		model.addAttribute("bookScore", bookService.bookScore(paramMap));
 		model.addAttribute("orderchk", orderchk);
 		model.addAttribute("relbookList", bookService.relatedBookList(paramMap));
 		model.addAttribute("reviewallList",basicService.reviewallList(paramMap));
+		System.out.println(zzimchk);
 		
 		return "/main/detail";
 	}
@@ -409,10 +412,17 @@ public class MemberController extends CommonController {
 		System.out.println("mypageInfo {}:  " + paramMap);
 		HashMap rsMap = new HashMap();
 		paramMap.put("member_id", service.getMemInfo(paramMap).get("member_id"));
-		int zzimCnt = service.zzimChk(paramMap);
-		model.addAttribute("zzimCnt", service.zzimChk(paramMap));
 
+		List<String> chkArr = new ArrayList<String>();
+		chkArr.add((String) paramMap.get("book_id"));
+		paramMap.put("zzimdupChk", chkArr);
+		int zzimCnt = service.zzimChk(paramMap);
+		model.addAttribute("zzimCnt", zzimCnt);
+
+		rsMap.put("paramMap", paramMap);
+		
 		if ("I".equals(paramMap.get("dup_chk")) && paramMap.containsKey("member_name")) {
+			paramMap.put("zzimdupChk", paramMap.get("book_id"));
 			service.zzimInsert(paramMap);
 		}
 
@@ -442,6 +452,21 @@ public class MemberController extends CommonController {
 			rsMap.put("ordernumchk", service.orderCntCheck(paramMap));
 		}
 		
+		int result = 0;
+		if ("I".equals(paramMap.get("status")) && paramMap.containsKey("status")) {
+				paramMap.put("zzimdupChk", chkArr); 
+				paramMap.put("member_name", paramMap.get("member_name"));
+				paramMap.put("member_id", service.getMemInfo(paramMap).get("member_id"));
+				int chk = service.zzimChk(paramMap);
+				rsMap.put("zzimdupChk", chk);
+				if(chk == 0) {
+					for(String array : chkArr) {
+						paramMap.put("book_id", array); 
+						result = service.zzimInsert(paramMap); 
+					} 
+					rsMap.put("result", result);
+				}	
+		}
 		rsMap.put("paramMap", paramMap);
 
 		return rsMap;

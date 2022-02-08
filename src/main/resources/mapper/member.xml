@@ -117,7 +117,10 @@
 	<select id="zzimChk" parameterType="hashMap" resultType="int">
 		select count(case when zzim_check = 'Y' then 1 end) as cnt from mypage as a left outer join books as b on a.book_id = b.book_id 
 		left outer join members as c on c.member_id = a.member_id 
-		WHERE c.member_name = #{member_name} and b.book_id =#{book_id}
+		WHERE c.member_name = #{member_name} and b.book_id in 
+		<foreach item="list" open="(" separator="," close=")" collection="zzimdupChk">
+							#{list}
+		</foreach>
 	</select>
 
 	<select id="zzimDelete" parameterType="hashMap" resultType="hashMap">

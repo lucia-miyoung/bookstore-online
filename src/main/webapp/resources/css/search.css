@@ -41,6 +41,7 @@ div.main-container {
 	margin: 0 auto;
 	margin-top: 20px;
 	margin-bottom: 90px;
+	position:relative;
 }
 
 div.header {
@@ -82,7 +83,76 @@ div.header > .title > a > .btn.history {
 .div-title + div {
 	padding-top: 50px;
 }
-
+.popup-wrap{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+}
+.popup-wrap.invisible {
+	display:none;
+}
+.popup-dim {
+    background-color: #000;
+    opacity: 0.6;
+    z-index: 999;
+    width:100%;
+    height: 100vh;
+    position: absolute;
+}
+.popup-container {
+    position: relative;
+    z-index: 9999;
+    background-color: #fff;
+   border-radius: 5px;
+}
+.popup-container span.fa-times {
+    position: absolute;
+    right:10px;
+    top: 7px;
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+}
+.popup-container span.fa-times:hover {
+    color:red;
+}
+.popup-content {
+    width: 300px;
+    height: 116px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    padding: 32px;
+    box-shadow: 0 2px 12px rgb(0 0 0 / 9%);
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 123, 255, 0.03);
+}
+.popup-content a {
+    font-size: 13px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    width: 130px;
+    text-align: center;
+    padding: 8px 0;
+    cursor: pointer;
+    text-decoration: none;
+    color:#333;
+    transition: all 200ms ease-in-out;
+    box-shadow: 0 2px 12px rgb(0 0 0 / 9%);
+}
+.popup-content a > i{
+    opacity: 0.8;
+    margin-right: 3px;
+}
+.popup-content a:hover {
+    color: var(--main-color);
+    border-color: rgba(0, 123, 255, 0.9);
+    background-color: rgba(0, 123, 255, 0.03);
+}
+.popup-content a.stay {
+    margin-right: 10px;
+}
 .search-bar {
 	display: flex;
 	height: 30px;
@@ -219,17 +289,37 @@ div.header > .title > a > .btn.history {
 
 .category-belt { 
 	display: flex;
-	align-items: baseline;
-	cursor: pointer;
-	background: none;
-	height: 30px;
-	margin-bottom: 10px;
+    align-items: center;
+    cursor: pointer;
+    background: none;
+    height: 30px;
+    margin-bottom: 10px;
+    justify-content: space-between;
 }
 
 .category-belt > form {
 	display: flex;
 	width: 100%;
 	height: 30px;
+}
+.cart-select-wrap {
+	display:flex;
+}
+.cart-select-wrap .cart-insert {
+	padding: 3px 7px;
+    font-size: 12px;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.2 );
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0.75);
+    border-radius: 4px;
+    transition: all 200ms ease-in-out;
+    cursor: pointer;
+}
+.cart-select-wrap .cart-insert:hover {
+	color: #007bff;
+    border-color: rgba(0, 123, 255, 0.9);
+    background-color: rgba(0, 123, 255, 0.03);
 }
 
 .btn-category-belt {
@@ -243,23 +333,25 @@ div.header > .title > a > .btn.history {
 }
 
 .category-title {
-	flex-basis: 8%;
 	display: flex;
-	justify-content: flex-start;
-	font-family: 'Noto Sans KR', sans-serif;
-	font-size: 1.5em;
-	font-weight: bold;
+    align-items: center;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 1.2em;
+    font-weight: bold;
 }
 
 .category-count {
-	flex-basis: 10%;
-	display: flex;
-	justify-content: flex-start;
 	font-family: 'Noto Sans KR', sans-serif;
-	color: var(--main-color);
-	margin: 0 5px;
+    color: var(--main-color);
+    margin: 0 11px;
+    font-size: 17px;
 }
-
+.category-belt label {
+	cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-left: 14px;
+}
 .to-cart {
 	cursor: default;
 	flex-basis: 82%;
@@ -267,7 +359,6 @@ div.header > .title > a > .btn.history {
 	justify-content: flex-end;
 	align-self: center;
 }
-
 .btn-cart-outer {
 	cursor: pointer;
 	background: var(--gray-color);
@@ -278,11 +369,11 @@ div.header > .title > a > .btn.history {
 	box-shadow: 1px 1px 1px -1px rgba(0,0,0,0.5);
 	
 }
-
 .btn-cart {
 	font-family: var(--korean-font);
+	font-size: 13px;
+    margin-left: 4px;
 }
-
 @font-face {
   font-family: "NotoSansKR";
   src: url("../fonts/openSans/OpenSans-SemiBold.woff") format("woff");

@@ -128,8 +128,8 @@
 				</div>
 				<!-- bookStarScore 끝 -->
 					<div class="choiceBtn">
-						<input type="button" value="바로읽기" class="goRead" id="choose"
-						onclick="goViewer();" />
+						<!-- <input type="button" value="바로읽기" class="goRead" id="choose"
+						onclick="goViewer();" /> -->
 						<button type="button" class="zzimBtn" id="choose">
 							<i class="fas fa-plus-circle"></i> 찜하기
 						</button>

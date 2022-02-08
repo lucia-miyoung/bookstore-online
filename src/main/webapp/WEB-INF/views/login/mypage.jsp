@@ -60,9 +60,9 @@
 
 <%--    	<c:if test="${showdata.mile}"> --%>
    <%-- 		<c:if test="${showdata.follow1 eq null}"> --%>
-   <c:if test="${paramMap.member_name != sessionScope.userId }">
+  <%--  <c:if test="${paramMap.member_name != sessionScope.userId }">
    			<button type="button" id="followBtn"> <i class="fas fa-plus-circle"></i> 팔로우 </button>
-  </c:if>
+  </c:if> --%>
     <%--  	</c:if>  --%>
      	<%-- <c:if test="${showdata.follow1}">
      		<button type="button" id="followBtn2"><i class="fas fa-minus-circle"></i>팔로우</button>
@@ -426,6 +426,9 @@ function gologinout(num) {
 					alert('선택된 도서가 없습니다.');
 					return;
 				}
+				if(!confirm("선택하신 책을 삭제하시겠습니까?")){
+    				return;
+    			}
 				ondeletezzim(chkArray); 
 		});
 	}
@@ -443,10 +446,7 @@ function gologinout(num) {
     			"chk_array" : array
     		},
     		success: function(rs) {
-    			if(!confirm("선택하신 책을 삭제하시겠습니까?")){
-    				return;
-    			}
-    			
+    				
     			alert('삭제가 완료되었습니다.');
 				$('#frm').attr('action', '/member/mypage');
     			$('#frm').submit();
