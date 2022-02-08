@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "BasicMapper">
+	
+	<update id="updateqstdetail" parameterType="hashMap">
+		update service set qst_answer = #{answer_content}, answer_status = 'Y', answer_date = now() where qst_index = #{qst_index};
+	</update>
+	<select id="qstdetail" parameterType="hashMap" resultType="hashMap">
+		select qst_index, member_name, qst_title, qst_content, qst_image, 
+		qst_type, DATE_FORMAT(qst_date, '%Y-%m-%d %H:%i') as qst_date, qst_answer, answer_status, DATE_FORMAT(answer_date, '%Y-%m-%d %H:%i') as answer_date from service where 1=1 and qst_index = #{qst_index};
+	</select>
+	<select id="qstTotalList" parameterType="hashMap" resultType="hashMap">
+		select qst_index, member_name, qst_title, qst_content, qst_image, 
+		qst_type, DATE_FORMAT(qst_date, '%Y-%m-%d %H:%i') as qst_date , qst_answer, answer_status, 
+		DATE_FORMAT(answer_date, '%Y-%m-%d %H:%i') as answer_date from service where 1=1  
+			<if test='search_name != null and search_name !="" '>
+			AND replace(qst_title, ' ', '') LIKE concat('%',replace(#{search_name}, ' ', ''),'%') 
+			</if>
+		order by qst_index desc limit #{range}, #{listSize};
+	</select>
+	<select id="qstTotalListCnt" parameterType="hashMap" resultType="int">
+		select count(*) from(select qst_index, member_name, qst_title, qst_content, qst_image, 
+		qst_type, qst_date, qst_answer, answer_status from service where 1=1  
+			<if test='search_name != null and search_name !="" '>
+			AND replace(qst_title, ' ', '') LIKE concat('%',replace(#{search_name}, ' ', ''),'%')
+			</if>
+			)t;
+	</select>
+	<select id="reviewallList" parameterType="hashMap" resultType="hashMap">
+		SELECT a.member_name, a.member_image, book_id, book_name, review_title, 
+		review_content, review_date, review_score FROM members as a 
+		inner join review as b on a.member_name = b.member_name 
+		where book_id = #{book_id} order by b.review_date desc;
+	</select>
+	<select id="orderAutonum" parameterType="hashMap" resultType="int">
+		select max(order_number)+1 as order_number from order_history;
+	</select>
+	
+	<select id="shipMsg" parameterType="hashMap" resultType="hashMap">
+		SELECT ship_msg FROM shipment;
+	</select>
+	
+	<select id="disCpn" parameterType="hashMap" resultType="hashMap">
+		SELECT discount_cpn FROM coupon;
+	</select>
+</mapper>

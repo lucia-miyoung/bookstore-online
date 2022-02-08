@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "BookMapper">
+	<select id="relatedBookList" parameterType="hashMap" resultType="hashMap">
+		select book_id, book_name, book_author, book_type, book_price from books 
+		where replace(book_type, ' ', '') 
+		like (select concat('%',replace(book_type, ' ', ''), '%') from books 
+		where book_id = #{book_id}) and book_id NOT IN (#{book_id});
+	</select>
+	<select id="salebookList" parameterType="hashMap" resultType="hashMap">
+		select a.book_id, a.book_name, a.book_author, a.book_type, 
+		a.book_date, a.book_price, b.sale, 
+		truncate(a.book_price-((a.book_price * b.sale)/100),-2) as sale_price 
+		from books as a inner join sale_books as b on a.book_id = b.book_id;
+	</select>
+	
+	<select id="bookAllList" parameterType="hashMap" resultType ="hashMap">
+		SELECT book_id, book_name FROM books where book_id in 
+		<foreach item="item" open="(" separator="," close=")" collection="zzimList">
+							#{item}
+		</foreach>
+	</select>
+
+	<select id="bookList" parameterType="hashMap" resultType="hashMap">
+	
+		SELECT book_id, book_name, book_author, book_type, book_date, book_price 
+		FROM books WHERE 1=1
+		<if test='keyword != null and keyword !="" '>
+			AND 
+			<if test="type eq 'title' ">
+			REPLACE(book_name,' ','')
+			</if>
+			<if test="type eq 'author' ">
+			REPLACE(book_author,' ','')			
+			</if>
+			<if test="type eq 'publisher' ">
+			REPLACE(book_type,' ','')
+			</if>
+			  LIKE concat('%',replace(#{keyword}, ' ', ''),'%');
+		</if>
+	</select>
+	
+	<select id="bookListCount" parameterType="hashMap" resultType="int">
+	
+		SELECT count(book_name) as cnt
+		FROM books WHERE 1=1
+		<if test='keyword != null and keyword !="" '>
+			AND 
+			<if test="type eq 'title' ">
+			REPLACE(book_name,' ','')
+			</if>
+			<if test="type eq 'author' ">
+			REPLACE(book_author,' ','')			
+			</if>
+			<if test="type eq 'publisher' ">
+			REPLACE(book_type,' ','')
+			</if>
+			  LIKE concat('%',replace(#{keyword}, ' ', ''),'%');
+		</if>
+	
+	</select>
+	
+	
+	<select id="bookDetail" parameterType="hashMap" resultType="hashMap">
+		SELECT book_id, book_name, book_author, book_type, book_date, book_price 
+		FROM books WHERE book_id = #{book_id}
+	
+	</select>
+	
+	<select id="booklikeUsers" parameterType="hashMap" resultType="hashMap">
+		SELECT b.member_id, c.member_name, c.member_image, b.book_id, 
+		a.book_name, heart_check 
+		FROM books as a left outer join mypage as b 
+		on a.book_id = b.book_id left outer join members as c on c.member_id = b.member_id 
+		where b.book_id = #{book_id} and heart_check = 'Y'
+		
+	
+	</select>
+	<select id="bookScore" parameterType="hashMap" resultType="hashMap">
+		SELECT TRIM(TRAILING '0' FROM(sum(CAST(review_score as DECIMAL(4,2))))/count(*)) as avg,
+		count(member_name) as cnt 
+		FROM review WHERE book_id = #{book_id}
+	</select>
+
+</mapper>

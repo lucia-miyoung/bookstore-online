@@ -87,7 +87,7 @@
 			<select class="type" name="type" >
 				<option value="title" ${paramMap.type == 'title' ? 'selected="selected"' : ''}>제목</option>
 				<option value="author" ${paramMap.type == 'author' ? 'selected="selected"' : ''}>저자</option>
-				<option value="publisher" ${paramMap.type == 'publisher' ? 'selected="selected"' : ''}>출판사</option>
+				<option value="publisher" ${paramMap.type == 'publisher' ? 'selected="selected"' : ''}>장르</option>
 			</select>
 			<input class="keyword" type="text" name="keyword" placeholder="검색어를 입력해주세요" autocomplete="off" spellcheck="false"/>
 			<button class="btn-search fas fa-search" name="category" value="all" ></button>
@@ -157,10 +157,14 @@
 								<div class="search ${book.book_id}" >
 									<div class="book" >
 										<!-- 책 커버 -->
+										<a href="/member/detail?book_id=${book.book_id }&member_name=${sessionScope.userId}">
 										<img class="cover" src="/bookImg/book${book.book_id}.jpg" />
+										</a>
 										<!-- 책 정보 -->
 										<div class="info" >
-											<div class="title" >${book.book_name }</div>
+											<a href="/member/detail?book_id=${book.book_id }&member_name=${sessionScope.userId}">
+												<span class="title" >${book.book_name }</span>
+											</a>
 											<div>
 												<span class="author" >${book.book_author }</span>
 												<span class="publisher" >${book.book_type }</span>
@@ -332,8 +336,8 @@
 			$("li > button").css("color", "black");
 		}
 		//검색결과 길이
-		var ebooklength = ${ebookCount };
-		var paperlength = ${paperCount };
+		/* var ebooklength = ${ebookCount };
+		var paperlength = ${paperCount }; */
 		var length = 0;
 		if("${param.category }" == "ebook")
 			length = ebooklength;
@@ -393,6 +397,7 @@
 			var bookNum = $(this).parents(".search")[0].classList[1];
 			location.href = "purchase?booknumber="+bookNum;
 		});
+		
 	});
 </script>
 </body>

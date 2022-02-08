@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "LoginMapper">
+
+	<select id="emaildupCheck" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*) as cnt 
+		FROM members 
+		WHERE member_id = #{member_email}
+		
+	</select>	
+	
+	<select id="namedupCheck" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*) as cnt 
+		FROM members 
+		WHERE replace(member_name,' ', '') = #{member_name}
+	
+	</select>
+	
+	<insert id="membersignup" parameterType="hashMap">
+		INSERT INTO members
+		(member_id, member_pw, 
+		member_name, member_home1, 
+		member_home2, member_home3, 
+		member_phone) 
+		VALUES(#{member_email}, #{member_new_pw}, 
+		#{member_name}, #{member_home1}, #{member_home2},
+		#{member_home3}, #{member_phone})
+	
+	</insert>
+	
+	<insert id="insertdatabox" parameterType="hashMap">
+		INSERT INTO member_data(member_name) values(#{member_name})
+	</insert>
+
+	<select id="memberloginChk" parameterType="hashMap" resultType="int">
+		
+		SELECT COUNT(*) AS cnt 
+		FROM members 
+		WHERE member_id = #{member_id} 
+		AND member_pw = #{member_new_pw}
+	
+	</select>
+
+	<insert id="insertLoginHistory" parameterType="hashMap">
+		INSERT INTO members_login_history
+		VALUES(#{member_id}, #{member_new_pw}, #{access_ip}, now());
+	</insert>
+	
+	<select id="getMemberList" parameterType="hashMap" resultType="hashMap">
+			SELECT member_id, member_pw, member_name 
+			FROM members 
+			WHERE member_id = #{member_id} and member_pw = #{member_new_pw}
+	
+	</select>
+	
+	<select id="getMemberInfo" parameterType="hashMap" resultType="hashMap">
+			SELECT member_id, member_name, member_phone, member_home1, member_home2, member_home3 
+			FROM members 
+			WHERE member_id = #{member_id}
+
+	</select>
+
+</mapper>

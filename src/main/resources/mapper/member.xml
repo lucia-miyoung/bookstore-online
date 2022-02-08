@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "MemberMapper">
+
+	<select id="showmyQstList" parameterType="hashMap" resultType="hashMap">
+		select qst_index, member_name, qst_title, qst_content, qst_image, qst_type, 
+		email, qst_date, qst_answer, answer_status  
+		from service where member_name =#{member_name} order by qst_index desc;
+	</select>
+	<insert id="insertQuestion" parameterType="hashMap">
+		insert into service(member_name, qst_title, qst_content, qst_image, 
+		qst_type, email, qst_date, qst_index, answer_status) 
+		values(#{member_name}, #{qst_title}, #{qst_content}, #{qst_image}, #{qst_type}, 
+		#{email}, now(), (select IFNULL(max(qst_index)+1,1) from service b), 'N');
+	</insert>
+	<delete id="deleteQuestion" parameterType="hashMap">
+		delete from service where qst_index = #{qst_index} and member_name=#{member_name}; 
+	</delete>
+	<select id="totalorderCnt" parameterType="hashMap" resultType="int">
+		select count(member_name) as cnt from order_history where member_name=#{member_name};
+	</select>
+	<select id="imgNameDupchk" parameterType="hashMap" resultType="int">
+		select count(member_image) as cnt from members where member_image = #{member_image};
+	</select>
+
+	<delete id="deletemyaccount" parameterType="hashMap">
+		delete from members where member_name = #{member_name} and member_id = #{member_id}
+	</delete>
+	<update id="updatemyinfo" parameterType="hashMap">
+		UPDATE members SET member_pw = #{member_new_pw}, 
+		MEMBER_NAME = #{member_name}, MEMBER_PHONE = #{member_phone}, 
+		MEMBER_HOME1 = #{member_home1}, MEMBER_HOME2 = #{member_home2}, 
+		MEMBER_HOME3 = #{member_home3}, member_image= #{member_image} 
+		WHERE member_id = #{member_id}
+	</update>
+	<select id="getMemInfo" parameterType="hashMap" resultType="hashMap">
+			SELECT member_id, member_name, member_phone, member_home1, 
+			member_home2, member_home3, member_image  
+			FROM members 
+			WHERE member_name = #{member_name}
+	</select>
+	<select id="myzzimCount" parameterType="hashMap" resultType="int">
+		select count(case when zzim_check = 'Y' then 1 end) as cnt FROM mypage as a 
+		left outer join members as b on a.member_id = b.member_id 
+		WHERE b.member_name = #{member_name}
+	</select>		
+	<select id="myheartCount" parameterType="hashMap" resultType="int">
+		SELECT count(case when heart_check = 'Y' then 1 end) as cnt 
+		FROM mypage
+		WHERE member_id=#{member_id}
+	</select>	
+
+	<select id="dupCheck" parameterType="hashMap" resultType="int">
+		SELECT count(*) as cnt FROM mypage as a left outer join members as b on a.member_id = b.member_id
+		WHERE b.member_name = #{member_name} and book_id = #{book_id}
+	</select>
+
+	<select id="heartCount" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*) as heartCnt 
+		FROM mypage 
+		WHERE heart_check = 'Y' AND book_id = #{book_id} 
+	</select>
+	
+	<select id="heartChk" parameterType="hashMap" resultType="hashMap">
+		SELECT a.member_id, b.member_name, heart_check as heartChk 
+		FROM mypage as a left outer join members as b on a.member_id = b.member_id  
+		WHERE b.member_name = #{member_name} and book_id = #{book_id}
+	</select>
+	
+	<select id="heartUpdate" parameterType="hashMap" resultType="hashMap">
+		UPDATE mypage
+		SET heart_check = #{heart_yn} 
+		WHERE member_id = #{member_id} and book_id = #{book_id}
+	</select>
+	
+	<select id="heartInsert" parameterType="hashMap" resultType="hashMap">
+		INSERT INTO mypage(member_id, book_id, heart_check) 
+		VALUES(#{member_id}, #{book_id}, #{heart_yn})
+	</select>
+
+	<select id="emotagList" parameterType="hashMap" resultType="hashMap">
+		SELECT book_id, member_name, emo_tag FROM book_emotion_tag WHERE book_id = #{book_id} order by emo_date asc
+	</select>
+	<delete id="deleteEmotag" parameterType="hashMap">
+		delete from book_emotion_tag where book_id =#{book_id} and member_name =#{member_name};
+	</delete>
+	<insert id="insertEmotag" parameterType="hashMap">
+		INSERT INTO book_emotion_tag(book_id, member_name, emo_tag, emo_date) 
+		VALUES(#{book_id}, #{member_name}, #{emo_tag} , now());
+	</insert>
+	<select id="myemotagdupchk" parameterType="hashMap" resultType="int">
+		select count(member_name) from book_emotion_tag where book_id=#{book_id} and member_name=#{member_name};
+	</select>
+	<select id="zzimInsert" parameterType="hashMap" resultType="hashMap">
+		
+		INSERT INTO mypage(member_id, book_id, zzim_check) 
+		VALUES(#{member_id}, #{book_id}, 'Y')
+	
+	</select>
+	<select id="zzimUpdate" parameterType="hashMap" resultType="hashMap">
+		
+		UPDATE mypage SET zzim_check = #{zzim_yn} 
+		WHERE member_id = #{member_id} and book_id = #{book_id}
+	
+	</select>
+	<select id="zzimList" parameterType="hashMap" resultType="hashMap">
+		
+		SELECT b.member_id as member_id, c.member_name, a.book_id as book_id, a.book_name as book_name
+		, a.book_type as book_type, book_author, zzim_check 
+		FROM books as a left outer join mypage as b 
+		on a.book_id = b.book_id left outer join members as c on b.member_id = c.member_id 
+		where c.member_name = #{member_name} and zzim_check = 'Y'
+		
+	</select>
+	
+	<select id="zzimChk" parameterType="hashMap" resultType="int">
+		select count(case when zzim_check = 'Y' then 1 end) as cnt from mypage as a left outer join books as b on a.book_id = b.book_id 
+		left outer join members as c on c.member_id = a.member_id 
+		WHERE c.member_name = #{member_name} and b.book_id =#{book_id}
+	</select>
+
+	<select id="zzimDelete" parameterType="hashMap" resultType="hashMap">
+
+		UPDATE mypage SET zzim_check = ''
+		WHERE member_id = #{member_id} AND
+		book_id in 
+		<foreach item="item" open="(" separator="," close=")" collection="zzimList">
+							#{item}
+		</foreach>
+		
+	</select>
+	
+	<insert id="insertReview" parameterType="hashMap">
+		INSERT INTO review(member_name, book_id, book_name, review_title, review_content, review_date, review_score) 
+		VALUES(#{member_name}, #{book_id}, #{book_name}, #{review_title}, 
+		#{review_content}, NOW(), #{star})
+	</insert>
+	
+	<select id="reviewListall" parameterType="hashMap" resultType="hashMap">
+		SELECT a.member_name, a.member_image, book_id, book_name, review_title, review_content, review_date, review_score 
+FROM members as a inner join review as b on a.member_name = b.member_name order by b.review_date desc
+	</select>
+	
+	<select id="reviewList" parameterType="hashMap" resultType="hashMap">
+		SELECT member_name, book_id, book_name, review_title, 
+		review_content, review_date, review_score FROM review 
+		WHERE member_name = #{member_name} order by review_date desc
+	</select>
+	<select id="reviewdupChk" parameterType="hashMap" resultType="int">
+		SELECT count(*) as cnt FROM review WHERE member_name=#{member_name} and book_id =#{book_id}
+	</select>
+	
+	<select id="reviewCount" parameterType="hashMap" resultType="int">
+		SELECT count(*) as cnt FROM review WHERE member_name=#{member_name}
+	</select>
+	<select id="orderList" parameterType="hashMap" resultType="hashMap">
+		SELECT a.order_number, a.member_name, b.book_id, b.book_name, book_author, book_type FROM order_history as a left outer join books as b 
+		on a.book_id = b.book_id WHERE member_name = #{member_name} order by order_number;
+	</select>
+	<select id="orderListCnt" parameterType="hashMap" resultType="int">
+		SELECT count(*) as cnt FROM order_history WHERE member_name = #{member_name}
+	</select>
+	<select id="orderdupchk" parameterType="hashMap" resultType="int">
+		SELECT count(*) as cnt FROM order_history 
+		WHERE member_name = #{member_name} and book_id = #{book_id}
+	</select>
+	<select id="orderCntCheck" parameterType="hashMap" resultType="int">
+		SELECT count(*) as cnt FROM order_history 
+		WHERE member_name = #{member_name} and book_id in 
+		<foreach item="list" open="(" separator="," close=")" collection="orderList">
+							#{list}
+		</foreach>
+	</select>
+	<delete id="deleteReview" parameterType="hashMap">
+		DELETE FROM review WHERE member_name = #{member_name} and book_id = #{book_id}
+	</delete>
+	<insert id="insertOrder" parameterType="hashMap">
+		INSERT INTO order_history(member_name, book_id, order_phone, order_address, 
+		order_email, ship_msg, order_price, order_date, order_number) 
+		VALUES(#{member_name}, #{book_id}, #{order_phone}, #{order_address}, 
+		#{order_email}, #{ship_msg}, #{total_price}, #{order_date}, #{order_number})
+	</insert>
+	<update id="savemymile" parameterType="hashMap">
+		UPDATE member_data SET mile = mile + cast(#{mileage} AS signed integer) WHERE member_name = #{member_name}
+	</update>
+	<select id="showalldata" parameterType="hashMap" resultType="hashMap">
+		SELECT member_name, mile FROM member_data 
+		WHERE member_name = #{member_name}
+	</select>
+</mapper>

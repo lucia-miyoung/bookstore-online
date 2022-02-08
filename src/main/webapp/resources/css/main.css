@@ -1189,6 +1189,7 @@ footer.main-footer {
 .footer-above {
   height: 40px;
   width: 100%;
+  display:flex;
   background-color: #f7f8fa;
   -webkit-user-select: initial !important;
 }

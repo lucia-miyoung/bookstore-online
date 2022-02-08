@@ -237,7 +237,7 @@
 			</div>
 			<!-- firstBox end -->
 			<div class="wrapperBox">
-				<div class="secondBox box">
+				<!-- <div class="secondBox box">
 					<h2>책소개</h2>
 					<div class="bookDetail detail">책소개하는 칸입니다. ‘이 소설 자체가 순수한
 						마법’이라는 최고의 극찬을 받으며 2017년 뉴베리 수상의 영광을 차지한 작품이다. 고요하지만 위험한 숲속에 해마다
@@ -276,7 +276,7 @@
 						루나가 처음으로 의도를 갖고 마법을 걸다 ∥ 44장 마음이 움직이다 ∥ 45장 거대한 용이 거대한 결단을 내리다 ∥
 						46장 몇 가족이 다시 만나다 ∥ 47장 글럭이 여행을 떠나며 시를 남기다 ∥ 48장 마지막 이야기를 하다</div>
 					<input type="button" value="더보기" class="clickBtn">
-				</div>
+				</div> -->
 				<div class="fourthBox box">
 					<h2>리뷰 (${bookScore.cnt})</h2>
 					<div class="reviewDetail detail">

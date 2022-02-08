@@ -154,6 +154,7 @@ div.question_content {
 }
 .answer_container {
     margin-top: 25px;
+    position:relative;
 }
 .answer_container.invisible {
     display: none;
@@ -173,8 +174,8 @@ div.question_content {
 }
 .answer_container button.answer_add_btn {
     position: absolute;
-    right: 97px;
-    bottom: 62px;
+    right: 0px;
+    bottom: -36px;
     outline: none;
     padding: 6px 15px;
     font-size: 14px;

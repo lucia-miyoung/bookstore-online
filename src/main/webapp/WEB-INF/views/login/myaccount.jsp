@@ -105,7 +105,9 @@
     <div class="listChoice">
         <p> 정보 관리 </p>
         <ul>
-            <li><a href="javascript:goview('/member/updatemypage');">회원정보수정 <i class="far fa-chevron-right"></i></a></li>
+            <c:if test="${sessionScope.userId != '관리자' }">
+            	<li><a href="javascript:goview('/member/updatemypage');">회원정보수정 <i class="far fa-chevron-right"></i></a></li>
+            </c:if>
             <li><a href="javascript:goview('/member/godeletepage');">회원탈퇴<i class="far fa-chevron-right"></i></a> </li>
         	<li><a href="javascript:goview('/member/mypage');">마이 페이지<i class="far fa-chevron-right"></i></a></li>
         </ul>
